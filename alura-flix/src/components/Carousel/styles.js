@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+export const VideoCardList = styled.ul`
+  margin: 0;
+  padding-left: 0;
+  padding-bottom: 32px;
+  list-style: none;
+  display: flex;
+  overflow-x: auto;
+
+
+`;
+
 export const VideoCardGroupContainer = styled.section`
 color:var(--white);
 min-height:197px;
@@ -42,14 +53,5 @@ display:inline-block;
 
 
 
-export const VideoCardList = styled.ul`
-  margin: 0;
-  padding-left: 0;
-  padding-bottom: 32px;
-  list-style: none;
-  display: flex;
-  overflow-x: auto;
 
-
-`;
 
