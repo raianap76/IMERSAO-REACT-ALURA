@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const BannerMainContainer = styled.section`
-  height:80vh;
+  height:50vw;
   color:var(--white);
   background-image:${({ backgroundImage }) => `url(${backgroundImage})`};
   background-size:cover;
