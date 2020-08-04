@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PageDefault from '../../PageDefault';
 import { Link } from 'react-router-dom'
 import FormField from '../../../components/FormField';
-
+import Button from '../../../components/Button';
 
 
 
@@ -55,13 +55,14 @@ function CadastroCategoria() {
 
                     <div>
                         {/*State*/}
-                        <label>Descrição
-                <textarea
-                                type="text"
-                                value={values.descricao}
-                                name="descricao"
-                                onChange={handleChange} />
-                        </label>
+
+                        <FormField
+                            label="Descrição"
+                            type="textarea"
+                            name="descricao"
+                            value={values.descricao}
+                            onChange={handleChange} />
+
 
 
                     </div>
@@ -70,22 +71,23 @@ function CadastroCategoria() {
                     <FormField
                         label="Cor"
                         type="color"
+                        name="cor"
                         value={values.cor}
                         onChange={handleChange}
                     />
 
 
 
-                    <button>
+                    <Button>
                         Cadastrar
-                </button>
+                </Button>
                 </div>
             </form>
 
             <ul>
-                {categorias.map((categoria, indice) => {
+                {categorias.map((categoria) => {
                     return (
-                        <li key={`${categoria} ${indice}`}>
+                        <li key={`${categoria.nome}`}>
                             {categoria.nome}
                         </li>
                     )
