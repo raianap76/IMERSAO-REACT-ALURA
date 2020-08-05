@@ -33,17 +33,21 @@ function CadastroCategoria() {
             infosDoEvento.target.value
         );
     }
-   useEffect(() =>{
-       console.log("alou alou ");
-       const URL_TOP = 'http://localhost:8080/categorias';
-       fetch(URL_TOP)
-       .then(async (respostaDoServidor) => {
-           const resposta = await respostaDoServidor.json();
-           setCategorias([
-               ...resposta,
-           ]);
-       });
-    }, [] );
+    useEffect(() => {
+        const URL_TOP = window.location.href.includes('localhost')
+        ?'http://localhost:8080/categorias'
+        :'https://dev-alura-flix.herokuapp.com/categorias'
+          fetch(URL_TOP)
+            .then(async (respostaDoServer) => {
+              if (respostaDoServer.ok) {
+                const resposta = await respostaDoServer.json();
+                setCategorias(resposta);
+                return;
+              }
+              throw new Error('Não foi possível pegar os dados');
+            });
+        
+      }, []);
 
     return (
         <PageDefault>
