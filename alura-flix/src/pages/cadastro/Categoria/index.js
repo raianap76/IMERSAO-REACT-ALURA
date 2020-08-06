@@ -3,6 +3,7 @@ import PageDefault from '../../PageDefault';
 import { Link } from 'react-router-dom'
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
+import useForm from '../../../hooks/useForm';
 
 
 
@@ -10,44 +11,28 @@ function CadastroCategoria() {
     const valoresIniciais = {
         nome: '',
         descricao: '',
-        cor: '#000'
+        cor: ''
     }
 
+    const { handleChange, values, clearForm } = useForm(valoresIniciais);
+    const [categorias, setCategorias] = useState([]);
 
-    const [values, setValues] = useState([valoresIniciais]);
-    const [categorias, setCategorias] = useState(['teste']);
     // const [nomeDaCategoria, setNomeDaCategoria] = useState('valor')
     /*style={{background: nomeDaCategoria}}*/
-    function setValue(chave, valor) {
-        setValues({
-            ...values,
-            [chave]: valor // nomr:'valor q vem do input naquele momento'
-        })
 
-    }
-
-    function handleChange(infosDoEvento) {
-        // const { getAttribute, value } = infosDoEvento.target;
-        setValue(
-            infosDoEvento.target.getAttribute('name'),
-            infosDoEvento.target.value
-        );
-    }
     useEffect(() => {
         const URL_TOP = window.location.href.includes('localhost')
-        ?'http://localhost:8080/categorias'
-        :'https://dev-alura-flix.herokuapp.com/categorias'
-          fetch(URL_TOP)
-            .then(async (respostaDoServer) => {
-              if (respostaDoServer.ok) {
-                const resposta = await respostaDoServer.json();
-                setCategorias(resposta);
-                return;
-              }
-              throw new Error('Não foi possível pegar os dados');
+            ? 'http://localhost:8080/categorias'
+            : 'https://dev-alura-flix.herokuapp.com/categorias'
+        fetch(URL_TOP)
+            .then(async (respostaDoServidor) => {
+                const resposta = await respostaDoServidor.json();
+                setCategorias([
+                    ...resposta,
+                ]);
             });
-        
-      }, []);
+
+    }, []);
 
     return (
         <PageDefault>
@@ -56,9 +41,9 @@ function CadastroCategoria() {
                 infosDoEvento.preventDefault();
                 setCategorias([
                     ...categorias,
-                    values
+                    values,
                 ]);
-                setValues(valoresIniciais)
+                clearForm();
             }}>
                 <div>
                     <FormField
@@ -99,21 +84,19 @@ function CadastroCategoria() {
                 </Button>
                 </div>
             </form>
-            {categorias.length ===0 && (
+            {categorias.length === 0 && (
                 <div>
-                    {/* carregando */}
-                    Loading...
+                    {/* Cargando... */}
+          Loading...
                 </div>
-            ) }
+            )}
 
             <ul>
-                {categorias.map((categoria) => {
-                    return (
-                        <li key={`${categoria.nome}`}>
-                            {categoria.nome}
-                        </li>
-                    )
-                })}
+                {categorias.map((categoria) => (
+                    <li key={`${categoria.titulo}`}>
+                        {categoria.titulo}
+                    </li>
+                ))}
             </ul>
 
 
